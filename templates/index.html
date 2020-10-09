@@ -2,10 +2,22 @@
 
 {% block content %}
 <p>{{ movies|length }} Titles</p>
+<form method='post'>
+    Name <input type='text' name='title' autocomplete='off' required>
+    Year <input type='text' name='year' autocomplete='off' required>
+    <input class='bth' type='submit' value='add'>
+</form>
+
 <ul class='movie-list'>
     {% for movie in movies %}  {# 迭代 movies 变量 #}
     <li>{{ movie.title }} - {{ movie.year }}
         <span class="float-right">
+	    
+            <a class='bth' href='{{ url_for('edit', movie_id=movie.id) }}'>Edit</a>
+	    <form class='inline-form' method='post' action="{{ url_for('delete',movie_id=movie.id) }}">
+	        <input class='bth' type='submit' name='delete' value='Delete' onclick='retuen confirm('Are you sure?')'>
+	    </form>
+	     
 	    <a class="imdb" href="https://www.imdb.com/find?q={{ movie.title }}" target="_blank" title="Find this movie on IMDb">IMDb</a>
 	</span>
     </li>
